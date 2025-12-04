@@ -1,0 +1,23 @@
+from ultralytics import YOLO
+import cv2
+import matplotlib.pyplot as plt
+
+model_path = f"{PROJECT_DIR}/train_run/weights/best.pt"
+
+print(f"Đang tải mô hình từ: {model_path}")
+model = YOLO(model_path)
+
+test_image_path = f"{PROJECT_DIR}/{dataset_folder_name}/test/images/9080161_jpg.rf.3ad318727baa90314970203b83f93a99.jpg"
+
+if os.path.exists(test_image_path):
+    results = model(test_image_path)
+
+    for result in results:
+        result.show()
+
+        save_path = f"{PROJECT_DIR}/result_prediction.jpg"
+        result.save(filename=save_path)
+        print(f"Đã lưu ảnh kết quả tại: {save_path}")
+else:
+    print(f"Không tìm thấy file ảnh: {test_image_path}")
+    print("Vui lòng vào Drive kiểm tra thư mục 'test/images' để lấy đúng tên file ảnh.")
